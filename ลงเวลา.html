@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบลงเวลาการทำงาน</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #e8f0ff;
+            background-image: url('https://www.transparenttextures.com/patterns/holly.png');
+            color: #2b2b2b;
+        }
+        .container {
+            width: 300px;
+            text-align: center;
+            border: 2px solid #ff0000;
+            border-radius: 12px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        .time-display {
+            font-size: 36px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .label {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .input-box {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .button-primary {
+            background-color: #28a745;
+            color: white;
+        }
+        .button-secondary {
+            background-color: #dc3545;
+            color: white;
+        }
+        .button:hover {
+            opacity: 0.9;
+        }
+        .summary-container {
+            display: none;
+            width: 300px;
+            text-align: center;
+            border: 2px solid #ff0000;
+            border-radius: 12px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        .summary-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+        .summary-list {
+            text-align: left;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        function updateTime() {
+            const currentTime = new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', hour12: true });
+            document.querySelector('.time-display').textContent = currentTime;
+        }
+
+        function showSummary() {
+            const employeeId = document.querySelector('.input-box').value;
+            const currentTime = new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', hour12: true });
+            
+            document.querySelector('.container').style.display = 'none';
+            document.querySelector('.summary-container').style.display = 'block';
+
+            document.querySelector('.summary-list').innerHTML = `
+                <p>- รหัสพนักงาน: ${employeeId || 'ไม่ระบุ'}</p>
+                <p>- เวลาเข้า: ${currentTime}</p>
+            `;
+        }
+
+        setInterval(updateTime, 1000);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="time-display">00:00 AM</div>
+        <div class="label">กรอกรหัสพนักงาน</div>
+        <input type="text" class="input-box" placeholder="รหัสพนักงาน">
+        <button class="button button-primary" onclick="showSummary()">ลงเวลา</button>
+        <button class="button button-secondary">ย้อนกลับ</button>
+    </div>
+
+    <div class="summary-container">
+        <div class="summary-title">สรุปการลงเวลา</div>
+        <div class="summary-list"></div>
+        <button class="button button-secondary" onclick="location.reload()">ย้อนกลับ</button>
+    </div>
+</body>
+</html>
